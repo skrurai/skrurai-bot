@@ -1,41 +1,38 @@
 # skrurai-bot
-> I’m a Twitter bot! 🤖
+I’m a Twitter bot! 🤖, Expected to be Fully functional by 15 July 2019!
 
-# Features/Scripts/Modes
-Currently, *skrurai-bot* is running the **math-evaluation script** which will evaluate math equations if the bot is mentioned on Twitter in THIS format:
-`@0skrurai evaluate:<math-equation>`
+## Mode
+Currently, the bot is under beta-testing and there is no specific mode. Thorough testing is ongoing to prepare for 15 July 2019
 
-Otherwise, all previous 'scripts' or 'modes' that skrurai-bot once ran are all located in `presets.py` with brief description of what they are.
+## Definitions
+Some words that is used throughout this documentation and its meanings
+-   Mode(s)
+    -   The current feature or script that the bot is running.
+-   Status(es)
+    -   A twitter post
+-   Bot(s)
+    -   The twitter bot
 
-# Clear/Clean all tweets and likes
-Cleaning the bot's tweets and likes is as simple as 1,2,3.
--   ### Import clean
-    ```python
-    from clean import clean
+
+## Clear/Clean all tweets and likes
+Cleaning the bot's tweets and likes is simple.
+-   Run the file from the terminal
+    ```shell
+    python3 clean.py
     ```
 
--   ### Run the function
-    ```python
-    clean(api_object, clean_statuses, clean_likes)
-    ```
+    -   It is going to clean all the statuses and posts by default (unless the status has the 🚫 emoji somewhere in the status)
 
-    -   api_object
-        -   the variable with `tweepy.API(auth)`
-    -   clean_statuses
-        -   boolean - If true, Cleans all the statuses except statueses with (🚫) in it.
-    -   clean_likes
-        -   boolean - If true, Clean all the statuses that the bot have liked before.
-
--   ### View the bot's profile
+-   View the bot's profile
     -   As of now, the script requires manual termination. So when the bot is 'cleaned', Terminate the script in terminal by pressing `Ctrl + C` or `Ctrl + Z`
 
-# Contribution Guide (Or first time usage)
+## Contribution Guide (Or first time usage)
 -   ### Install  all the required packages first
     ```shell
     pip install -r requirements.txt 
     ```
 
--   ### Include credentials by Twitter in `/credentials.py`
+-   ### Include credentials by Twitter in `credentials.py`
     ```python
 
     # Consumer Token
