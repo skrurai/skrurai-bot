@@ -22,7 +22,7 @@ def semicaps(text):
     return ''.join(return_string)
 
 # Returns yes or no randomly
-def yesorno(text):
+def yesorno_experimental(text):
     try:
         import random
     except:
@@ -38,4 +38,4 @@ def yesorno(text):
 # Returns all the possible commands/functions
 def commands(text):
     commands = [func for func in globals() if not func.startswith('__')]
-    return 'All the commands are:\n' + "\n".join(commands)
+    return 'All the commands \U0001F4BB are:\n\n' + "\n".join(commands)
