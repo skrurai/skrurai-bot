@@ -39,7 +39,7 @@ Some words that is used throughout this documentation and its meanings
 Cleaning the bot's tweets and likes is simple.
 -   Run the file from the terminal
     ```shell
-    python3 clean.py
+    python3 _clean_.py
     ```
 
     -   It is going to clean all the statuses and posts by default (unless the status has the 🚫 emoji somewhere in the status)
