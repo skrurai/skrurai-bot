@@ -1,0 +1,9 @@
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# lib files
+lib*
+
+# credentials
+credentials.py
