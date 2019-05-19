@@ -1,17 +1,38 @@
 # skrurai-bot
-I’m a Twitter bot! 🤖, Expected to be Fully functional by 15 July 2019!
+I’m a Twitter bot! 🤖, Expected to be Fully functional by 15 June 2019!
 
-## Mode
-Currently, the bot is under beta-testing and there is no specific mode. Thorough testing is ongoing to prepare for 15 July 2019
+## Commands
+To use the twitter bot, One must @mention the bot in the format: [command:text].
+For developers, all the commands functions are available at `./commands.py`
+
+Examples:
+```
+Tweet: @0skrurai [math:1+2]
+Reply: The answer is: 3
+
+Tweet: [math: 1+2]
+Reply: None, robot is not mentioned in the status
+
+Tweet: @0skrurai [semicaps:hello]
+Reply: HeLlO
+
+Tweet: @0skrurai [commands:]
+Reply: <Robot will then reply with all the available commands>
+
+```
 
 ## Definitions
 Some words that is used throughout this documentation and its meanings
 -   Mode(s)
     -   The current feature or script that the bot is running.
--   Status(es)
+-   Status(es) / Tweet(s)
     -   A twitter post
 -   Bot(s)
     -   The twitter bot
+-   Mention(s)
+    -   A new status with the twitter bot's username mentioned, usually it contains @ and followed by the username of the twitter bot
+-   Username(s)
+    -   Screen name for twitter
 
 
 ## Clear/Clean all tweets and likes
