@@ -69,8 +69,7 @@ def main():
         sleep(60)
 
 if __name__ == "__main__":
-    print(commands('what'))
-    # try:
-    #     main()
-    # except:
-    #     main()
+    try:
+        main()
+    except:
+        main()
