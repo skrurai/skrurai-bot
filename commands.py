@@ -2,6 +2,11 @@
 # TO ADD NEW COMMANDS, NAME A FUNCTION THAT TAKES THE 'text' PARAMETER
 # IT MUST RETURN A VALUE
 
+# So if the tweet has [math:92+1]
+# The bot will run math('92+1')
+# and the math function will evaluate the result and return
+# Same with your commands.
+
 # Evaluate math equations
 def math(text):
     final = text.lstrip('0')
