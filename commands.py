@@ -37,8 +37,8 @@ def math(text):
     
 
 
-# Returns semi caps
-def semicaps(text):
+# Returns semi caps with spongebob mock image
+def mock(text):
     return_string = []
 
     for index,letter in enumerate(text):
@@ -47,7 +47,7 @@ def semicaps(text):
         else:
             return_string.append(letter.lower())
     
-    return ''.join(return_string)
+    return ''.join(return_string) + ' https://imgflip.com/s/meme/Mocking-Spongebob.jpg'
 
 # Returns yes or no randomly
 def yesorno(text):
