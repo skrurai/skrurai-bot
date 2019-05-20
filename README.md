@@ -1,6 +1,9 @@
 # skrurai-bot@next
 The next iteration of skrurai-bot lays here, Ongoing features and development are found here. When stable, it will be merged with the master branch. For the rest of the stuff including user agreement and etc, please visit the master branch.
 
+# WARNING
+The @next version of skrurai-bot, when merged can cause catastrophic failures on how it works, It's like a new version.
+
 # Table of Contents
 | Content               | Description           |
 |:-------------         |:-------------|
