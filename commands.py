@@ -46,3 +46,15 @@ def mock(api_object, tweet_id, screen_name, input):
     except:
         print(f'DUPLICATE_STATUS: {tweet_id}')
     # TODO: log that duplicate
+
+def joke(api_object, tweet_id, screen_name, input):
+    import requests
+    json = requests.get('https://official-joke-api.appspot.com/random_joke').json()
+
+    joke = json['setup'] + ' ' + json['punchline']
+    
+    try:
+        api_object.update_status(status=f'@{screen_name} {joke} {footer}', in_reply_to_status_id=tweet_id)
+        print(f'JUST_REPLIED: {tweet_id}')
+    except:
+        print(f'DUPLICATE_STATUS: {tweet_id}')
