@@ -31,7 +31,7 @@ def semicaps(text):
     return ''.join(return_string)
 
 # Returns yes or no randomly
-def yesorno_experimental(text):
+def yesorno_e(text):
     try:
         import random
     except:
@@ -45,7 +45,7 @@ def yesorno_experimental(text):
         return 'No!'
 
 # Sends a url of a cat picture:
-def cat_experimental(text):
+def cat_e(text):
     try:
         import requests
     except:
