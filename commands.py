@@ -29,7 +29,7 @@ def math(text):
                 # Evaluate
                 return f'The answer is: {eval(final)}'
             except:
-                return 'Not a Math Equation!'
+                return 'Can\'t handle complex math equations!!'
             
     except:
         return '[math:] does not accept any letters'
@@ -50,7 +50,7 @@ def semicaps(text):
     return ''.join(return_string)
 
 # Returns yes or no randomly
-def yesorno_e(text):
+def yesorno(text):
     try:
         import random
     except:
@@ -64,7 +64,7 @@ def yesorno_e(text):
         return 'No!'
 
 # Sends a url of a cat picture:
-def cat_e(text):
+def cat(text):
     try:
         import requests
     except:

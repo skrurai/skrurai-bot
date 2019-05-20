@@ -1,5 +1,9 @@
 def clean(api_object, clean_statuses, clean_likes, include_string):
     while True:
+
+        from id_handler import clear_all
+        clear_all()
+        
         if(clean_statuses):
             for status in api_object.user_timeline():
                 json = status._json

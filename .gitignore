@@ -11,3 +11,6 @@ lib*
 
 # credentials
 credentials.py
+
+# Tweets id
+*.json

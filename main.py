@@ -11,6 +11,8 @@ try:
 except:
     print('Please follow the documentation to import credentials')
 
+from id_handler import push_id, ids
+
 # Import necessary libraries
 from time import sleep
 from commands import *
@@ -20,6 +22,12 @@ auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
 auth.set_access_token(key, secret)
 api = tweepy.API(auth)
 
+# FLOW OF PROGRAM
+# (1) SEE ALL MENTIONS
+# (2) CHECK IF THE TEXT IS A COMMAND OR NOT
+# (3) CHECK IF REPLIED TO ALREADY OR NOT
+# (4) REPLIED
+
 # Main Function (invoking below)
 def main():
     # Run in a loop
@@ -27,50 +35,39 @@ def main():
         print('LOOP')
         print(moment.date(moment.now()).strftime("%d/%m/%Y %H:%M:%S"))
 
-        # Check all the mentions:
+        # (1)
         for m in api.mentions_timeline():
-
-            # Pick out the JSON
             mention = m._json
 
-            # Get the ID and TEXT CONTENTS of the mentioned tweet
+            status_text = mention['text'].lower()
+            screen_name = f"@{mention['user']['screen_name']}"
             id = mention['id']
-            status = mention['text'].lower()
-            tweet_author = mention['user']['screen_name']
 
-            # Commands typically look like this [command:text]
-            # Program will only evaluate anything inside []
-            text_inside_brackets = status[status.find('[') + 1 : status.find(']')]
+            text_in_brackets = status_text[status_text.find('[') + 1 : status_text.find(']')]
 
-            # Seperate the command and text
-            command = text_inside_brackets.split(':')[0]
-            text = text_inside_brackets.split(':')[1]
+            command = text_in_brackets.split(':')[0]
+            text = text_in_brackets.split(':')[1]
 
-            # Try seeing if the functions is run-able, if not, it is not a command
+            # (2)
             try:
-                # It is all global functions including globals
-                # Its the same as running command(text) like a function
-                return_value = globals()[command](text)
-
-                # Try if can reply or not
-                try:
-                    api.update_status(status=f'@{tweet_author} {return_value}', in_reply_to_status_id=id)
-                    print(f'Just Replied: \n{status}\n')
-                
-                # Print that its already replied to
-                except:
-                    print(f'Tweet is replied to already: \n{status}\n')
-
-            # Print that it is not a command
+                returnstring = globals()[command](text)
             except:
-                print(f'Not a Command \n{status}\n')
-                            
-            
+                print(f'Not A Command {id}')
+
+            # (3)
+            if id not in ids():
+                # push the id
+                push_id(id)
+
+                # (4)
+                api.update_status(status=f'{screen_name} {returnstring}', in_reply_to_status_id=id)
+                print(f'Just Replied {id}')
+            else:
+                # print replied
+                print(f'Previously Replied {id}')
+
         # Sleep for 1 minute and then loop again
         sleep(60)
 
 if __name__ == "__main__":
-    try:
-        main()
-    except:
-        main()
+    main()
