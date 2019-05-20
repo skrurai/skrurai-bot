@@ -1,4 +1,4 @@
-def clean(api_object, clean_statuses, clean_likes, include_string):
+def clean(api_object, clean_statuses, clean_likes, exclude_string):
     while True:
 
         from id_handler import clear_all
@@ -9,7 +9,7 @@ def clean(api_object, clean_statuses, clean_likes, include_string):
                 json = status._json
                 id = json['id']
                 
-                if(include_string not in json['text']):
+                if(exclude_string not in json['text']):
                     api_object.destroy_status(id)
 
         if(clean_likes):
