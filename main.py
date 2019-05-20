@@ -1,81 +1,48 @@
 # Import packages
-try:
-    import tweepy
-    import moment
-except:
-    print('Please install all the required packages')
-
-# Import credentials
-try:
-    from credentials import *
-except:
-    print('Please follow the documentation to import credentials')
-
+import tweepy
+from credentials import *
 from id_handler import push_id, ids
-
-# Import necessary libraries
 from time import sleep
 from commands import *
+import re
 
 # Tweepy initialisation
 auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
 auth.set_access_token(key, secret)
 api = tweepy.API(auth)
 
-# FLOW OF PROGRAM
-# (1) SEE ALL MENTIONS
-# (2) CHECK IF THE TEXT IS A COMMAND OR NOT
-# (3) CHECK IF REPLIED TO ALREADY OR NOT
-# (4) REPLIED
+# -   See all tweets that mentioned the bot
+# -   See if there is a command in the tweet
+# -   Check if the tweet is replied to already or not (by checking against a json file of all the tweets' id replied to)
 
 # Main Function (invoking below)
 def main():
-    # Run in a loop
     while True:
-        print('\nLOOP')
-        print(moment.date(moment.now()).strftime("%d/%m/%Y %H:%M:%S"))
-
-        # (1)
+        # Loop in the timeline
         for m in api.mentions_timeline():
             mention = m._json
 
-            status_text = mention['text'].lower()
-            screen_name = f"@{mention['user']['screen_name']}"
             id = mention['id']
+            status = mention['text']
+            screen_name = mention['user']['screen_name']
 
-            text_in_brackets = status_text[status_text.find('[') + 1 : status_text.find(']')]
+            inner_brackets = status[status.find('[')+1:status.find(']')]
+            command = inner_brackets.split(':')[0]
+            input = inner_brackets.split(':')[1]
 
-            command = text_in_brackets.split(':')[0]
-            text = text_in_brackets.split(':')[1]
-
-            # (2)
-            try:
-                returnstring = globals()[command](text) + '\n\n\U0001F916'
-            except:
-                print(f'Not A Command {id}')
-            else:
-                # (3)
-                if id not in ids():
-                    # push the id
+            # If not replied to
+            if(id not in ids()):
+                # run the function
+                try:
+                    globals()[command](api, id, screen_name, input)
                     push_id(id)
-
-                    try:
-                        # (4)
-                        api.update_status(status=f'{screen_name} {returnstring}', in_reply_to_status_id=id)
-                        print(f'Just Replied {id}')
-                    except:
-                        print(f'Duplicate Status {id}')
-                else:
-                    # print replied
-                    print(f'Previously Replied {id}')
-
-        # Sleep for 30 secs and then loop again
+                except:
+                    # Log that it is not a real function
+                    print(f'NOT_A_FUNCTION: {id}')
+            elif id in ids():
+                # log that is previously replied
+                print(f'PREVIOUSLY_REPLIED: {id}')
         sleep(30)
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt as ki:
-
-        # Tweet this everytime there is a keyboard interrupt (exiting)
-        api.update_status(status='(\U0001F44B) As of now, The bot will shutdown for repairs, development and maintainence, See you later! *beep boop noises*')
+    main()

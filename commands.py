@@ -1,83 +1,48 @@
-# So if the tweet has [math:92+1]
-# The bot will run math('92+1')
-# and the math function will evaluate the result and return
-# Same with your commands.
-
-# To create a command, define a function that takes text as the parameter.
-# the function name will be the command and the text argument is the input
-
-# Here are some commands
+import re
+footer = '\n\n\U0001F916'
 
 # Evaluate math equations
-def math(text):
+def math(api_object, tweet_id, screen_name, input):
 
-    try:
-        # Import regex
-        import re
-
-        # Strip any numbers
-        final = text.lstrip('0')
-
-        # See if letters exist, if it exists, it will return a value other than None
-        if(re.search('[a-zA-Z]+', final) is not None):
-
-            # Raise an exception
-            raise Exception('Letter')
-        else:
-
-            # If its a number
+    # check if there is NO letters
+    if re.search(r'[a-zA-Z]', input) is None:
+        try:
+            eval(input.lstrip('0'))
+        except:
             try:
-                # Evaluate
-                return f'The answer is: {eval(final)}'
+                api_object.update_status(status=f'@{screen_name} The command does not accept complex math equations {footer}', in_reply_to_status_id=tweet_id)
+                print(f'JUST_REPLIED: {tweet_id}')
             except:
-                return 'Can\'t handle complex math equations!!'
-            
-    except:
-        return '[math:] does not accept any letters'
-    
-    
-
-
-# Returns semi caps with spongebob mock image
-def mock(text):
-    return_string = []
-
-    for index,letter in enumerate(text):
-        if(index % 2 == 0):
-            return_string.append(letter.upper())
+                print(f'DUPLICATE_STATUS: {tweet_id}')
         else:
-            return_string.append(letter.lower())
-    
-    return ''.join(return_string) + ' https://imgflip.com/s/meme/Mocking-Spongebob.jpg'
+            try:
+                api_object.update_status(status=f'@{screen_name} The answer is: {eval(input.lstrip(0))} {footer}', in_reply_to_status_id=tweet_id)
+                print(f'JUST_REPLIED: {tweet_id}')
+            except:
+                print(f'DUPLICATE_STATUS: {tweet_id}')
+    else:
+        try:
+            api_object.update_status(status=f'@{screen_name} The command does not letters as part of the equation {footer}', in_reply_to_status_id=tweet_id)
+            print(f'JUST_REPLIED: {tweet_id}')
+        except:
+            print(f'DUPLICATE_STATUS: {tweet_id}')
+        
 
-# Returns yes or no randomly
-def yesorno(text):
+def mock(api_object, tweet_id, screen_name, input):
+    mock_text = []
+
+    for index, letter in enumerate(input.lower()):
+        if index % 2 is 0:
+            mock_text.append(letter.upper())
+        else:
+            mock_text.append(letter)
+
+    return_string = ''.join(mock_text)
+    # TODO: tweet with picture
+
     try:
-        import random
+        api_object.update_with_media(filename='./assets/mock.jpg', status=f'@{screen_name} {return_string} {footer}', in_reply_to_status_id=tweet_id)
+        print(f'JUST_REPLIED: {tweet_id}')
     except:
-        import random
-
-    choice = random.choice([True, False])
-
-    if(choice == True):
-        return 'Yes!'
-    if(choice == False):
-        return 'No!'
-
-# Sends a url of a cat picture:
-def cat(text):
-    try:
-        import requests
-    except:
-        return 'Something Went Wrong!'
-
-    try:
-        url = requests.get('https://api.thecatapi.com/v1/images/search?size=full').json()[0]['url']
-        return f'Here is a picture of a cat: {url}'
-    except:
-        return 'Something Went Wrong while getting the picture!!!'
-
-# Returns all the possible commands/functions
-def commands(text):
-    commands = [func for func in globals() if not func.startswith('__')]
-    return 'All the commands \U0001F4BB are:\n\n' + "\n".join(commands)
+        print(f'DUPLICATE_STATUS: {tweet_id}')
+    # TODO: log that duplicate
