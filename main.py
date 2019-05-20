@@ -63,7 +63,7 @@ def main():
 
             # Print that it is not a command
             except:
-                print('Not a Command')
+                print(f'Not a Command \n{status}\n')
                             
             
         # Sleep for 1 minute and then loop again

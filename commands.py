@@ -9,14 +9,33 @@
 
 # Evaluate math equations
 def math(text):
-    final = text.lstrip('0')
-    
-    # If can evaluate, it is a math equation
+
     try:
-        eval(final)
-        return f'The answer is: {eval(final)}'
+        # Import regex
+        import re
+
+        # Strip any numbers
+        final = text.lstrip('0')
+
+        # See if letters exist, if it exists, it will return a value other than None
+        if(re.search('[a-zA-Z]+', final) is not None):
+
+            # Raise an exception
+            raise Exception('Letter')
+        else:
+
+            # If its a number
+            try:
+                # Evaluate
+                return f'The answer is: {eval(final)}'
+            except:
+                return 'Not a Math Equation!'
+            
     except:
-        return 'Not a VALID math equation!'
+        return '[math:] does not accept any letters'
+    
+    
+
 
 # Returns semi caps
 def semicaps(text):
