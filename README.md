@@ -32,16 +32,16 @@ To use the twitter bot, One must @mention the bot in the format: [command:text].
 
 Examples:
 ```
-Tweet: @0skrurai [math:1+2]
+Tweet: @skruraibot [math:1+2]
 Reply: The answer is: 3
 
 Tweet: [math: 1+2]
 Reply: None, robot is not mentioned in the status
 
-Tweet: @0skrurai [semicaps:hello]
+Tweet: @skruraibot [semicaps:hello]
 Reply: HeLlO
 
-Tweet: @0skrurai [commands:]
+Tweet: @skruraibot [commands:]
 Reply: <Robot will then reply with all the available commands>
 
 ```
