@@ -3,7 +3,7 @@ I’m a Twitter bot! 🤖, Expected to be Fully functional by 15 June 2019!
 
 ## Commands
 To use the twitter bot, One must @mention the bot in the format: [command:text].
-For developers, all the commands functions are available at `./commands.py`
+For developers, all the commands functions are available at `./commands.py`, there is a tutorial at `./commands.py`
 
 Examples:
 ```
