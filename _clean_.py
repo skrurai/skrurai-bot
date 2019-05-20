@@ -9,7 +9,10 @@ def clean(api_object, clean_statuses, clean_likes, exclude_string):
                 json = status._json
                 id = json['id']
                 
+                # If the string is not in the status
                 if(exclude_string not in json['text']):
+
+                    # Delete the status
                     api_object.destroy_status(id)
 
         if(clean_likes):
