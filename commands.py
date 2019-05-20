@@ -45,7 +45,7 @@ def yesorno_experimental(text):
         return 'No!'
 
 # Sends a url of a cat picture:
-def cat(text):
+def cat_experimental(text):
     try:
         import requests
     except:
