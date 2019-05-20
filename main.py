@@ -32,7 +32,7 @@ api = tweepy.API(auth)
 def main():
     # Run in a loop
     while True:
-        print('LOOP')
+        print('\nLOOP')
         print(moment.date(moment.now()).strftime("%d/%m/%Y %H:%M:%S"))
 
         # (1)
@@ -66,8 +66,8 @@ def main():
                 # print replied
                 print(f'Previously Replied {id}')
 
-        # Sleep for 1 minute and then loop again
-        sleep(60)
+        # Sleep for 30 secs and then loop again
+        sleep(30)
 
 if __name__ == "__main__":
     main()
