@@ -36,6 +36,7 @@ def main():
             # Get the ID and TEXT CONTENTS of the mentioned tweet
             id = mention['id']
             status = mention['text'].lower()
+            tweet_author = mention['user']['screen_name']
 
             # Commands typically look like this [command:text]
             # Program will only evaluate anything inside []
@@ -53,7 +54,7 @@ def main():
 
                 # Try if can reply or not
                 try:
-                    api.update_status(status=return_value, in_reply_to_status_id=id)
+                    api.update_status(status=f'@{tweet_author} {return_value}', in_reply_to_status_id=id)
                     print(f'Just Replied: \n{status}\n')
                 
                 # Print that its already replied to
