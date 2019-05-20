@@ -1,3 +1,7 @@
+# HERE LIES ALL THE COMMANDS
+# TO ADD NEW COMMANDS, NAME A FUNCTION THAT TAKES THE 'text' PARAMETER
+# IT MUST RETURN A VALUE
+
 # Evaluate math equations
 def math(text):
     final = text.lstrip('0')
