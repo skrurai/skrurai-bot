@@ -73,4 +73,9 @@ def main():
         sleep(30)
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt as ki:
+
+        # Tweet this everytime there is a keyboard interrupt (exiting)
+        api.update_status(status='(\U0001F44B) As of now, The bot will shutdown for repairs, development and maintainence, See you later! *beep boop noises*')
