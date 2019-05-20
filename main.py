@@ -53,18 +53,21 @@ def main():
                 returnstring = globals()[command](text)
             except:
                 print(f'Not A Command {id}')
-
-            # (3)
-            if id not in ids():
-                # push the id
-                push_id(id)
-
-                # (4)
-                api.update_status(status=f'{screen_name} {returnstring}', in_reply_to_status_id=id)
-                print(f'Just Replied {id}')
             else:
-                # print replied
-                print(f'Previously Replied {id}')
+                # (3)
+                if id not in ids():
+                    # push the id
+                    push_id(id)
+
+                    try:
+                        # (4)
+                        api.update_status(status=f'{screen_name} {returnstring}', in_reply_to_status_id=id)
+                        print(f'Just Replied {id}')
+                    except:
+                        print(f'Duplicate Status {id}')
+                else:
+                    # print replied
+                    print(f'Previously Replied {id}')
 
         # Sleep for 30 secs and then loop again
         sleep(30)
