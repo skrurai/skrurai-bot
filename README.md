@@ -1,6 +1,9 @@
 # skrurai-bot
 skrurai-bot is a twitter bot. It is an open-source initiative and it is made to what it is today with the help of other developers and contributors. While proper credit(s) is tried to be given, I, the creator might not be able to reach to all contributors and I would like to extend my sincere apology to you if you are not given proper credit.
 
+# @next branch
+The @next branch is the development branch for the upcoming version/iteration of skrurai-bot. The features are very very experimental and developers needs to be cautious
+
 # Table of Contents
 | Content               | Description           |
 |:-------------         |:-------------|
