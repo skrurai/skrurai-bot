@@ -4,9 +4,11 @@ skrurai-bot is twitter bot. It is an open-source initiative and it is made to wh
 # Table of Contents
 | Content               | Description           |
 |:-------------         |:-------------|
-| [User Agreeement](#user-agreeement)       |An agreement that is binded automatically when a twitter user uses any of the bot's feature(s) |
-| Definitions              | centered      |
+| [User Agreeement](#user-agreement)       |An agreement that is binded automatically when a twitter user uses any of the bot's feature(s) |
+| [Definitions](#Definitions)              | Words used in the documentations with its meaning      |
 | [Commands](#commands)         | How to use commands      |
+| [Flow of program](#Flow-of-program) | How the program works and the 'flow' it goes through to find @mentioned tweets |
+| [Contribution](#Contribution) | Contribution Guide on how to contribute features/commands|
 
 # User Agreement
 -   By using any of skrurai-bot's features, the user is automatically binded to an agreement that basically tells how any form of data is handled.
@@ -47,16 +49,22 @@ Reply: <Robot will then reply with all the available commands>
 # Flow of program:
 -   See all tweets that mentioned the bot
 -   See if there is a command in the tweet
--   Check if the tweet is replied to already or not (by checking against a json file of all the tweets replied to)
+-   Check if the tweet is replied to already or not (by checking against a json file of all the tweets' id replied to)
 
 #  Contribution
 -   Install all the required pacakges
--   Create a file called `credentials.py`, it should be in the format below with the same variable names.
+-   Create a file called `credentials.py` in the root folder, it should be in the format below with the same variable names.
     ```python
     consumer_token = 'CONSUMER_TOKEN_HERE'
     consumer_secret = 'CONSUMER_SECRET_HERE'
     key = 'ACCESS_KEY_HERE'
     secret = 'ACCESS_SECRET_HERE'
     ```
--   To contribute a command, proceed to `/commands.py`.
--   To contibute to how to bot works, proceed to `/main.py`.
+-   Create a file called `replied_to_tweets.json` in the root folder, this file will be used to check the 3rd step in the [Flow of program](#flow-of-program). It should only contain exactly this:
+    ```json
+    []
+    ```
+
+-   Done, now you can code away!
+    -   To contribute a command, proceed to `/commands.py`.
+    -   To contibute to how to bot works, proceed to `/main.py`.
