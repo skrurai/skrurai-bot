@@ -50,7 +50,7 @@ def main():
 
             # (2)
             try:
-                returnstring = globals()[command](text)
+                returnstring = globals()[command](text) + '\n\n\U0001F916'
             except:
                 print(f'Not A Command {id}')
             else:
