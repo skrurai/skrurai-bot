@@ -1,17 +1,17 @@
-def clean(api_object, clean_statuses, clean_likes, exclude_string):
+def clean(api_object, clean_statuses, clean_likes, clean_ids, exclude_string):
     while True:
 
-        from id_handler import clear_all
-        clear_all()
+        if(clean_ids):
+            from id_handler import clear_all
+            clear_all()
         
         if(clean_statuses):
             for status in api_object.user_timeline():
                 json = status._json
                 id = json['id']
                 
-                # If the string is not in the status
-                if(exclude_string not in json['text']):
-
+                # If the string is in the status
+                if(exclude_string in json['text']):
                     # Delete the status
                     api_object.destroy_status(id)
 
@@ -32,4 +32,4 @@ if(__name__ == '__main__'):
     api = tweepy.API(auth)
 
     # Invoke the clean function
-    clean(api, True, True, '\U0001F6AB')
+    clean(api, True, False, False, '\U0001F44B')
