@@ -1,11 +1,12 @@
-# HERE LIES ALL THE COMMANDS
-# TO ADD NEW COMMANDS, NAME A FUNCTION THAT TAKES THE 'text' PARAMETER
-# IT MUST RETURN A VALUE
-
 # So if the tweet has [math:92+1]
 # The bot will run math('92+1')
 # and the math function will evaluate the result and return
 # Same with your commands.
+
+# To create a command, define a function that takes text as the parameter.
+# the function name will be the command and the text argument is the input
+
+# Here are some commands
 
 # Evaluate math equations
 def math(text):
