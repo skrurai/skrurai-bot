@@ -1,6 +1,3 @@
-# skrurai-bot@next
-The next iteration of skrurai-bot lays here, Ongoing features and development are found here. When stable, it will be merged with the master branch. For the rest of the stuff including user agreement and etc, please visit the master branch.
-
 # v2.0
 -   Added a new way of how to make a command (read at `commands.py`). (Please note that previous versions of commands will break!)
 -   More optimization (not so sure about this...)
