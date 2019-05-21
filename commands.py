@@ -1,34 +1,50 @@
-import re
-footer = '\n\n\U0001F916'
+# COMMANDS, THE HEART OF THE ROBOT.
+
+# TO MAKE A COMMAND, ONE MUST UNDERSTAND HOW THE COMMANDS WORK
+# WHEN A USER MENTION THE BOT WITH [COMMAND:INPUT_TEXT], IT IS THE SAME AS PYTHON EXECUTING COMMAND(INPUT_TEXT)
+# SO FOR EXAMPLE: [math:92+1], IT IS THE SAME AS PYTHON EXECUTING math(92+1)
+
+# THE HANDLING OF TWEETING THE COMMAND WILL BE OVER AT MAIN.PY.
+# THE COMMAND MUST! MUST!!! RETURN AN OBJECT WITH KEYS 'return_string' and 'filename'
+# return_string IS BASICALLY THE RETURN STRING FROM THE COMMAND
+# filename IS OPTIONAL, BUT ACCEPTS A FILEPATH TO AN IMAGE OR VIDEO AS A STRING.
+
+# THE COMMAND WILL ACCEPT AN ARGUMENT WHICH IS INPUT - WHICH IS WHATEVER THE INPUT OF THE USER IS (IN STRING)
+# Have fun, if you have any more info, please contact me on GitHub or open an issue!
 
 # Evaluate math equations
-def math(api_object, tweet_id, screen_name, input):
+def math(input):
+    import re
 
     # check if there is NO letters
     if re.search(r'[a-zA-Z]', input) is None:
         try:
             eval(input.lstrip('0'))
         except:
-            try:
-                api_object.update_status(status=f'@{screen_name} The command does not accept complex math equations {footer}', in_reply_to_status_id=tweet_id)
-                print(f'JUST_REPLIED: {tweet_id}')
-            except:
-                print(f'DUPLICATE_STATUS: {tweet_id}')
+            return_string = 'The command does not accept complex math equations'
+
+            return {
+                'return_string': return_string,
+                'filename': None
+            }
         else:
-            try:
-                api_object.update_status(status=f'@{screen_name} The answer is: {eval(input.lstrip(0))} {footer}', in_reply_to_status_id=tweet_id)
-                print(f'JUST_REPLIED: {tweet_id}')
-            except:
-                print(f'DUPLICATE_STATUS: {tweet_id}')
+            evaluated_string = eval(input.lstrip('0'))
+            return_string = f'The answer is: {evaluated_string}'
+
+            return {
+                'return_string': return_string,
+                'filename': None
+            }
     else:
-        try:
-            api_object.update_status(status=f'@{screen_name} The command does not letters as part of the equation {footer}', in_reply_to_status_id=tweet_id)
-            print(f'JUST_REPLIED: {tweet_id}')
-        except:
-            print(f'DUPLICATE_STATUS: {tweet_id}')
+        return_string = 'The command does not letters as part of the equation'
+
+        return {
+            'return_string': return_string,
+            'filename': None
+        }
         
 
-def mock(api_object, tweet_id, screen_name, input):
+def mock(input):
     mock_text = []
 
     for index, letter in enumerate(input.lower()):
@@ -38,23 +54,19 @@ def mock(api_object, tweet_id, screen_name, input):
             mock_text.append(letter)
 
     return_string = ''.join(mock_text)
-    # TODO: tweet with picture
+    
+    return {
+        'return_string': return_string,
+        'filename': './assets/mock.jpg'
+    }
 
-    try:
-        api_object.update_with_media(filename='./assets/mock.jpg', status=f'@{screen_name} {return_string} {footer}', in_reply_to_status_id=tweet_id)
-        print(f'JUST_REPLIED: {tweet_id}')
-    except:
-        print(f'DUPLICATE_STATUS: {tweet_id}')
-    # TODO: log that duplicate
-
-def joke(api_object, tweet_id, screen_name, input):
+def joke(input):
     import requests
     json = requests.get('https://official-joke-api.appspot.com/random_joke').json()
 
     joke = json['setup'] + ' ' + json['punchline']
     
-    try:
-        api_object.update_status(status=f'@{screen_name} {joke} {footer}', in_reply_to_status_id=tweet_id)
-        print(f'JUST_REPLIED: {tweet_id}')
-    except:
-        print(f'DUPLICATE_STATUS: {tweet_id}')
+    return {
+        'return_string': joke,
+        'filename': None
+    }
