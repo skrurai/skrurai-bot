@@ -1,81 +1,88 @@
 # Import packages
-try:
-    import tweepy
-    import moment
-except:
-    print('Please install all the required packages')
-
-# Import credentials
-try:
-    from credentials import *
-except:
-    print('Please follow the documentation to import credentials')
-
-from id_handler import push_id, ids
-
-# Import necessary libraries
+import tweepy
+from credentials import *
+from id_handler import ids, push_id
 from time import sleep
 from commands import *
+import re
+
+footer = '\n\n\U0001F916'
 
 # Tweepy initialisation
 auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
 auth.set_access_token(key, secret)
 api = tweepy.API(auth)
 
-# FLOW OF PROGRAM
-# (1) SEE ALL MENTIONS
-# (2) CHECK IF THE TEXT IS A COMMAND OR NOT
-# (3) CHECK IF REPLIED TO ALREADY OR NOT
-# (4) REPLIED
-
 # Main Function (invoking below)
 def main():
-    # Run in a loop
-    while True:
-        print('\nLOOP')
-        print(moment.date(moment.now()).strftime("%d/%m/%Y %H:%M:%S"))
+    # Loop in the timeline
+    for m in api.mentions_timeline():
+        mention = m._json
 
-        # (1)
-        for m in api.mentions_timeline():
-            mention = m._json
+        # Get the tweet id, the text and the username
+        tweet_id = mention['id']
+        status = mention['text']
+        screen_name = mention['user']['screen_name']
 
-            status_text = mention['text'].lower()
-            screen_name = f"@{mention['user']['screen_name']}"
-            id = mention['id']
+        # For tweets without [], the status.find will return -1, so as to say, the inner_brackets is finding anything between [] or else the variable will just be NONE
+        inner_brackets = status[status.find('[')+1:status.find(']')] if status.find('[') is not -1 else None
 
-            text_in_brackets = status_text[status_text.find('[') + 1 : status_text.find(']')]
+        # When split [command:input_text], so split only if inner_brackets is not None else the command and input_text will be an empty string
+        command = inner_brackets.split(':')[0] if inner_brackets is not None else ''
+        input_text = inner_brackets.split(':')[1] if inner_brackets is not None else ''
 
-            command = text_in_brackets.split(':')[0]
-            text = text_in_brackets.split(':')[1]
+        # Check if the ID is part of the ids() (part of the IDs in the JSON file)
+        if(tweet_id not in ids()):
 
-            # (2)
+            # Run the function
+
+            # Try to see if it will return any error (the ones that return errors are the ones has no function, or function is not available)
             try:
-                returnstring = globals()[command](text) + '\n\n\U0001F916'
+
+                # What I mean by this is that when the user type in [command:input_text], it WILl execute in python as command(input_text)
+                globals()[command](input_text)
+
+                # PUSH THE ID (id_handler library)
+                push_id(tweet_id)
             except:
-                print(f'Not A Command {id}')
+
+                # (the ones that return errors are the ones has no function, or function is not available)
+                # Log that it is not a real function
+                print(f'NOT_A_FUNCTION: {tweet_id} {command}')
             else:
-                # (3)
-                if id not in ids():
-                    # push the id
-                    push_id(id)
+
+                # If no errors, proceed to tweet
+                # execution is the return value from the command in commands.py
+                execution = globals()[command](input_text)
+
+                # TWEET
+                # the return value will check the filename key if there is any filename, if there is, it will update the status with media, else just the text.
+                if execution['filename'] is None:
+                    tweet_string = execution['return_string']
 
                     try:
-                        # (4)
-                        api.update_status(status=f'{screen_name} {returnstring}', in_reply_to_status_id=id)
-                        print(f'Just Replied {id}')
+                        api.update_status(status=f'@{screen_name} {tweet_string} {footer}', in_reply_to_status_id=tweet_id)
+                        print(f'JUST_REPLIED: {tweet_id} {command}')
                     except:
-                        print(f'Duplicate Status {id}')
+                        print(f'DUPLICATE_CONTENT_OR_STATUS: {tweet_id} {command}')
+
                 else:
-                    # print replied
-                    print(f'Previously Replied {id}')
+                    filename = execution['filename']
+                    tweet_string = execution['return_string']
 
-        # Sleep for 30 secs and then loop again
-        sleep(30)
+                    try:
+                        api.update_with_media(filename=filename, status=f'@{screen_name} {tweet_string} {footer}', in_reply_to_status_id=tweet_id)
+                        print(f'JUST_REPLIED: {tweet_id} {command}')
+                    except:
+                        print(f'DUPLICATE_CONTENT_OR_STATUS: {tweet_id} {command}')
 
+        elif tweet_id in ids():
+            # log that is previously replied
+            print(f'PREVIOUSLY_REPLIED: {tweet_id} {command}')
+
+
+    
 if __name__ == "__main__":
-    try:
+    while True:
         main()
-    except KeyboardInterrupt as ki:
-
-        # Tweet this everytime there is a keyboard interrupt (exiting)
-        api.update_status(status='(\U0001F44B) As of now, The bot will shutdown for repairs, development and maintainence, See you later! *beep boop noises*')
+        sleep(30)

@@ -32,4 +32,4 @@ if(__name__ == '__main__'):
     api = tweepy.API(auth)
 
     # Invoke the clean function
-    clean(api, True, False, False, '\U0001F44B')
+    clean(api, True, True, True, '')

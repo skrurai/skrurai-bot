@@ -1,6 +1,9 @@
-# skrurai-bot
-skrurai-bot is a twitter bot. It is an open-source initiative and it is made to what it is today with the help of other developers and contributors. While proper credit(s) is tried to be given, I, the creator might not be able to reach to all contributors and I would like to extend my sincere apology to you if you are not given proper credit.
+# skrurai-bot@next
+The next iteration of skrurai-bot lays here, Ongoing features and development are found here. When stable, it will be merged with the master branch. For the rest of the stuff including user agreement and etc, please visit the master branch.
 
+# v2.0
+-   Added a new way of how to make a command (read at `commands.py`). (Please note that previous versions of commands will break!)
+-   More optimization (not so sure about this...)
 # @next branch
 The @next branch is the development branch for the upcoming version/iteration of skrurai-bot. The features are very very experimental and developers needs to be cautious
 
