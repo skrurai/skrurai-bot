@@ -1,19 +1,9 @@
 # skrurai-bot@next
 The next iteration of skrurai-bot lays here, Ongoing features and development are found here. When stable, it will be merged with the master branch. For the rest of the stuff including user agreement and etc, please visit the master branch.
 
-# WARNING
-The @next version of skrurai-bot, when merged can cause catastrophic failures on how it works, It's like a new version.
-
-# Table of Contents
-| Content               | Description           |
-|:-------------         |:-------------|
-| [Flow of program](#Flow-of-program) | How the program works and the 'flow' it goes through to find @mentioned tweets |
-| [Contribution](#Contribution) | Contribution Guide on how to contribute features/commands|
-
-# Flow of program:
--   See all tweets that mentioned the bot
--   See if there is a command in the tweet
--   Check if the tweet is replied to already or not (by checking against a json file of all the tweets' id replied to)
+# v2.0
+-   Added a new way of how to make a command (read at `commands.py`). (Please note that previous versions of commands will break!)
+-   More optimization (not so sure about this...)
 
 #  Contribution
 -   Install all the required pacakges
